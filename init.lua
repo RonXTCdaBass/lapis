@@ -101,3 +101,85 @@ minetest.register_craft({
 		{'lapis:lapis'},
 	}
 })
+
+-- NEW Stairs, Slab and more ...
+
+stairs.register_stair(
+	"lapis:lapisblock",
+	"lapis:lapisblock",
+	{cracky = 2, level = 2},
+	{"lapis_lapislazuliblock.png"},
+	S("Lapislazuli Stair"),
+	minetest.registered_nodes["lapis:lapisblock"].sounds
+)
+stairs.register_slab( -- register a slab without adding inner and outer stairs
+	"lapis:lapisblock",
+	"lapis:lapisblock",
+	{cracky = 2, level = 2},
+	{"lapis_lapislazuliblock.png"},
+	S("Lapislazuli Slab"),
+	minetest.registered_nodes["lapis:lapisblock"].sounds
+)
+
+-- Connecting walls
+if minetest.get_modpath("walls") and minetest.global_exists("walls") and walls.register ~= nil then
+	walls.register("lapis:lapisblock_wall",      S("A Lapislazuli Wall"),      "lapis_lapislazuliblock.png",      "lapis:lapisblock",      minetest.registered_nodes["lapis:lapisblock"].sounds)
+	walls.register("lapis:lapisblock_wall", S("A Lapislazuli Wall"), "lapis_lapislazuliblock.png", "lapis:lapisblock", minetest.registered_nodes["lapis:lapisblock"].sounds)
+end
+
+-- Lapislazuli Glass Pane Crafting
+minetest.register_craft({
+	output = 'xpanes:lapis_glass_pane_flat 16',
+	recipe = {
+		{'', '', ''},
+		{'lapis:lapis', 'lapis:lapis', 'lapis:lapis'},
+		{'lapis:lapis', 'lapis:lapis', 'lapis:lapis'},
+	}
+})
+
+if minetest.get_modpath("xpanes") and minetest.global_exists("xpanes") and xpanes.register_pane ~= nil then
+	xpanes.register_pane("lapis_glass_pane", {
+		description = S("Lapislazuli Glass Pane"),
+		textures = {
+			{
+				name        = "lapis_lapis_glass.png",
+				align_style = "world",
+				scale       = 2
+			},
+			"",
+			"xpanes_edge_obsidian.png"
+		},
+		inventory_image = "([combine:32x32:-8,-8=lapis_lapis_glass.png:24,-8=lapis_lapis_glass.png:-8,24=lapis_lapis_glass.png:24,24=lapis_lapis_glass.png)^[resize:16x16^[multiply:#339^default_obsidian_glass.png",
+		wield_image     = "([combine:32x32:-8,-8=lapis_lapis_glass.png:24,-8=lapis_lapis_glass.png:-8,24=lapis_lapis_glass.png:24,24=lapis_lapis_glass.png)^[resize:16x16^[multiply:#339^default_obsidian_glass.png",		use_texture_alpha = true,
+		sounds = default.node_sound_glass_defaults(),
+		groups = {snappy=2, cracky=3, oddly_breakable_by_hand=3},
+		recipe = {
+			{"group:lapis_glass", "group:lapis_glass", "group:lapis_glass"},
+			{"group:lapis_glass", "group:lapis_glass", "group:lapis_glass"}
+		}
+	})
+end
+
+if minetest.get_modpath("doors") and minetest.global_exists("doors") and doors.register_door ~= nil then
+doors.register("door_lapis_glass", {
+		tiles = {"lapis_door_lapis_glass.png"},
+		description = S("Lapislazuli Glass Door"),
+		inventory_image = "lapis_doors_item_lapis_glass.png",
+		use_texture_alpha = true,
+		groups = {node = 1, cracky=3},
+		sounds = default.node_sound_glass_defaults(),
+		sound_open = "doors_glass_door_open",
+		sound_close = "doors_glass_door_close",
+		gain_open = 0.3,
+		gain_close = 0.25,
+		recipe = {
+			{"xpanes:lapis_glass_pane_flat", "xpanes:lapis_glass_pane_flat"},
+			{"xpanes:lapis_glass_pane_flat", "xpanes:lapis_glass_pane_flat"},
+			{"xpanes:lapis_glass_pane_flat", "xpanes:lapis_glass_pane_flat"},
+		},
+})
+end
+
+minetest.after(0, function()
+	print("[MOD] Lapis loaded")
+end)
