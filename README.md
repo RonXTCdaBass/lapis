@@ -3,9 +3,12 @@ Version 1.2, License: WTFPL/CC BY-SA 3.0; See LICENSE.txt
 
 ![Screenshot](screenshot.high.png)
 
-## New Screenshot
+## New Screenshots
 
 ![screenshot_new_2024](https://github.com/RonXTCdaBass/lapis/assets/115949021/5028660f-4d3a-4162-adf7-590688be4f65)
+
+![screenshot_2024_02](https://github.com/RonXTCdaBass/lapis/assets/115949021/4433acc4-b7f6-4b93-8904-d1e45eb9fc77)
+
 
 
 ## Description
